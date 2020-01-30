@@ -1,0 +1,14 @@
+/*Stylesheet by Matt Laska, 1.22.2020*/
+#mydiv {
+  background-color: green;
+  font-size: 15px;
+  width: 50%;
+  text-align: center;
+  margin: 0 auto;
+}
+#title {
+  background-color: magenta;
+  width: 75%;
+  text-align: center;
+  margin: 0 auto;
+}
