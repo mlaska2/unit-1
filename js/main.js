@@ -1,63 +1,107 @@
-// Script by Matt Laska, 1.22.2020
+// Script by Matt Laska, G575 Spring 2020
 //initialize function called when the script loads
 function initialize(){
-    cities();
+	cities();
 };
 
 //function to create a table with cities and their populations
 function cities(){
-    //define two arrays for cities and population
-    var cities = [
-        'Madison',
-        'Milwaukee',
-        'Green Bay',
-        'Superior'
-    ];
-    var population = [
-        233209,
-        594833,
-        104057,
-        27244
-    ];
+	//define two arrays for cities and population
+	var cityPop = [
+		{
+			city: 'Madison',
+			population: 233209
+		},
+		{
+			city: 'Milwaukee',
+			population: 594833
+		},
+		{
+			city: 'Green Bay',
+			population: 104057
+		},
+		{
+			city: 'Superior',
+			population: 27244
+		}
+	];
 
-    //create the table element
-    var table = document.createElement("table");
+	//append the table element to the div
+	$("#mydiv").append("<table>");
 
-    //create a header row
-    var headerRow = document.createElement("tr");
+	//append a header row to the table
+	$("table").append("<tr>");
 
-    //add the "City" column
-    var cityHeader = document.createElement("th");
-    cityHeader.innerHTML = "City";
-    headerRow.appendChild(cityHeader);
+	//add the "City" and "Population" columns to the header row
+	$("tr").append("<th>City</th><th>Population</th>");
 
-    //add the "Population" column
-    var popHeader = document.createElement("th");
-    popHeader.innerHTML = "Population";
-    headerRow.appendChild(popHeader);
-
-    //add the row to the table
-    table.appendChild(headerRow);
-
-    //loop to add a new row for each city
-    for (var i = 0; i < cities.length; i++){
-        var tr = document.createElement("tr");
-
-        var city = document.createElement("td");
-        city.innerHTML = cities[i];
-        tr.appendChild(city);
-
-        var pop = document.createElement("td");
-        pop.innerHTML = population[i];
-        tr.appendChild(pop);
-
-        table.appendChild(tr);
+	//loop to add a new row for each city
+    for (var i = 0; i < cityPop.length; i++){
+        //assign longer html strings to a variable
+        var rowHtml = "<tr><td>" + cityPop[i].city + "</td><td>" + cityPop[i].population + "</td></tr>";
+        //add the row's html string to the table
+        $("table").append(rowHtml);
     };
 
-    //add the table to the div in index.html
-    var mydiv = document.getElementById("mydiv");
-    mydiv.appendChild(table);
+    addColumns(cityPop);
+    addEvents();
 };
 
-//call the initialize function when the window has loaded
-window.onload = initialize();
+function addColumns(cityPop){
+
+    $('tr').each(function(i){
+
+    	if (i == 0){
+
+    		$(this).apend('<th>City Size</th>'); //Change APPEND
+    	} else {
+
+    		var citySize;
+
+    		if (cityPop[i-1].population < 100000){
+    			citySize = 'Small';
+
+    		} else if (cityPop[i-1].population < 500000){
+    			citysize = 'Medium';
+
+    		} else {
+    			citySize = 'Large';
+    		};
+
+    		$this.append('<td' + citySize + '</td>'); //<td> change this
+    	};
+    });
+};
+
+function addEvents(){
+
+	$('#table').mouseover(function(){
+
+		var color = "rgb(";
+
+		for (var i=0; i<3; i++){
+
+			var random = Math.round(Math.random() * 255);
+
+			color += "random";
+
+			if (i<2){
+				color += ",";
+
+			} else {
+				color += ")";
+		};
+
+		$(this).css('color', color);
+	});
+
+	function clickme(){
+
+		alert('Hey, you clicked me!');
+	};
+
+	$('table').on('click', clickme);
+};
+
+//call the initialize function when the document has loaded
+$(document).ready(initialize);
