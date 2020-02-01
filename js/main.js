@@ -43,7 +43,7 @@ function cities(){
         $("table").append(rowHtml);
     };
 
-    addColumns(cityPop);
+  	addColumns(cityPop);
     addEvents();
 };
 
@@ -53,29 +53,29 @@ function addColumns(cityPop){
 
     	if (i == 0){
 
-    		$(this).apend('<th>City Size</th>'); //Change APPEND
+    		$(this).append('<th>City Size</th>');
     	} else {
 
     		var citySize;
 
-    		if (cityPop[i-1].population < 100000){
+    		if (cityPop[i-1].population < 100000){   //why doing i-1??
     			citySize = 'Small';
 
-    		} else if (cityPop[i-1].population < 500000){
-    			citysize = 'Medium';
+    		} else if (cityPop[i-1].population < 500000){  //why doing i-1??
+    			citySize = 'Medium';
 
     		} else {
     			citySize = 'Large';
     		};
 
-    		$this.append('<td' + citySize + '</td>'); //<td> change this
+    		$(this).append('<td>' + citySize + '</td>');
     	};
     });
 };
 
 function addEvents(){
 
-	$('#table').mouseover(function(){
+	$('table').mouseover(function(){  //have we assigned any id that theres an # for??
 
 		var color = "rgb(";
 
@@ -83,7 +83,7 @@ function addEvents(){
 
 			var random = Math.round(Math.random() * 255);
 
-			color += "random";
+			color += random; //should it be in quotation marks? i dont think so
 
 			if (i<2){
 				color += ",";
@@ -93,7 +93,7 @@ function addEvents(){
 		};
 
 		$(this).css('color', color);
-	});
+	};
 
 	function clickme(){
 
@@ -101,7 +101,7 @@ function addEvents(){
 	};
 
 	$('table').on('click', clickme);
+  });
 };
-
 //call the initialize function when the document has loaded
 $(document).ready(initialize);
