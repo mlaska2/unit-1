@@ -2,6 +2,8 @@
 //initialize function called when the script loads
 function initialize(){
 	cities();
+	//call the debugAjax function upon the document being loaded
+	debugAjax();
 };
 
 //function to create a table with cities and their populations
@@ -74,36 +76,68 @@ function addColumns(cityPop){
     	};
     });
 };
+//fucntion to create pop-up when something (table) in our case, is clicked
+function clickme(){
+	//the message that will be displayed in the pop-up
+	alert('Hey, you clicked me!');
+};
+//function to create random RGB color and set css color style for table to it
+function hoverHandler(){
+	//define a variable "color"
+	var color = "rgb(";
+	//loop to generate 3 numbers between 0 and 255 to create an RGB color
+	for (var i=0; i<3; i++){
+		//assign (random number between 0-1 multiplied by 255) to the variable
+		var random = Math.round(Math.random() * 255);
+		// add the number to "color" variable
+		color += random;
+		// conditional to add either "," or ")" to "color" variable
+		if (i<2){
+			color += ",";
+
+		} else {
+			color += ")";
+	};
+	//set the css style of color to this element (the table) with the variable "color"
+	$('table').css('color', color);
+}
+}
 //create a function to add various behaviors when interacting with the table
 function addEvents(){
-	//creating anonymous function to change color of table every time cursor moves over it
-	$('table').mouseover(function(){
-		//define a variable "color"
-		var color = "rgb(";
-		//loop to generate 3 numbers between 0 and 255 to create an RGB color
-		for (var i=0; i<3; i++){
-			//assign (random number between 0-1 multiplied by 255) to the variable
-			var random = Math.round(Math.random() * 255);
-			// add the number to "color" variable
-			color += random;
-			// conditional to add either "," or ")" to "color" variable
-			if (i<2){
-				color += ",";
-
-			} else {
-				color += ")";
-		};
-		//set the css style of color to this element (the table) with the variable "color"
-		$(this).css('color', color);
-	};
-	//create a function to display a pop-up when the table is clicked
-	function clickme(){
-		//the message that will be displayed in the pop-up
-		alert('Hey, you clicked me!');
-	};
-	//add the behavior (clickme function) to the table
+	//event listener to call hoverHandler function when hover over table
+	$('table').mouseover(hoverHandler);
+	//event listener to call clickme function when table is clicked on
 	$('table').on('click', clickme);
-  });
+
 };
+
+//New Code from Activity 4 - debug it
+
+//create callback function that accesses the AJAX request response and displays it in the browser
+function debugCallback(response){
+	//setting variable mydata equal to the servers response from the AJAX request
+	var mydata=response
+	//appending the response in string format to the HTML mydiv ID to display results in browser
+	$(mydiv).append('GeoJSON data: <br>' + JSON.stringify(mydata));
+};
+
+//create function that executes AJAX request
+function debugAjax(){
+	//create a variable mydata - don't think this is totally necessary??
+	var mydata;
+	//jQuery AJAX request method with two parameters
+	$.ajax("data/MegaCities.geojson", {
+		dataType: "json",
+		//calls callback function upon sucessfully executed AJAX request
+		success: debugCallback
+	});
+//this is undefined because mydata has not been assigned to anything - that happens in the callback function
+//	$(mydiv).append('<br>GeoJSON data:<br>' + JSON.stringify(mydata));
+};
+/*mydata has not yet been defined because the AJAX request hasn't been
+completed, meaning the callback function hasn't been called yet*/
+//$(mydiv).append('GeoJSON data: ' + JSON.stringify(mydata));
+
+
 //call the initialize function when the document has loaded
 $(document).ready(initialize);
